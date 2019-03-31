@@ -9,6 +9,12 @@ int main(int argc, char *argv[])
 		printf("USAGE: diamond.out [UPPERCASE LETTER]\n");
 		exit(0);
 	}
+	else if((argv[1][0] < 'A') || (argv[1][0] > 'Z'))
+	{
+		printf("USAGE: diamond.out [UPPERCASE LETTER]\n");
+		exit(0);
+	}
+
 
 	char letter = argv[1][0];
 	int size = (((int)letter - ((int)'A')) * 2) + 1;	
@@ -21,37 +27,35 @@ int main(int argc, char *argv[])
 		for(int j = 0; j < size; j++)
 			*(field + (i*size) + j) = ' ';
 
-	int vel_x = -1;
-	int vel_y = 1;
+	int vel_x = 1;
+	int vel_y = -1;
 
-	int pos_x = (int)letter - ((int)'A');
-	int pos_y = 0;
+	// Starting position
+	char *pos = (field + (((int)letter - ((int)'A')) * size) + 0);
+
+	char cur = letter;
 
 	int let_delta = -1;
 
-	int done = 0;
-
-	while(!done)
+	while(*pos == ' ')
 	{
-		*(field + (pos_x * size) + pos_y) = letter;
-		letter += let_delta;
+		*pos = cur;
+		cur += let_delta;
 
-		pos_x += vel_x;
-		pos_y += vel_y;
+		pos = pos + (size * vel_y) + vel_x;
 
-		if((pos_x == 0) || (pos_x == (size - 1)))
-		{
-			vel_x = -vel_x;
-			let_delta = -let_delta;
-		}
-		if((pos_y == 0) || (pos_y == (size - 1)))
+		// Getting to the letter A means you're bouncing off the top or bottom
+		if(cur == 'A')
 		{
 			vel_y = -vel_y;
 			let_delta = -let_delta;
 		}
-
-		if(*(field + (pos_x * size) + pos_y) != ' ')
-			done = 1;
+		// Getting to the letter E means you're bouncing off the sides
+		if(cur == letter)
+		{
+			vel_x = -vel_x;
+			let_delta = -let_delta;
+		}
 	}
 
 	for(int i = 0; i < size; i++)
