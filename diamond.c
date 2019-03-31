@@ -1,3 +1,10 @@
+/*
+Tom Busby
+https://github.com/Nimdoc/BadCode.rocks-Diamond
+
+To the extent possible under law, Tom Busby has waived all copyright and related or neighboring rights to BadCode.rocks-Diamond. This work is published from: United States. 
+*/
+
 #include <stdio.h>
 #include <stdlib.h> 
 
